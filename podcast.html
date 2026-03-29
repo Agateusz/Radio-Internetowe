@@ -7,6 +7,29 @@
 </head>
 <body>
 
+<script>
+const API_KEY = "AIzaSyCkovat4ywql3dwHVnixtmZhSQG47RH0k0";
+const VIDEO_ID = "dQw4w9WgXcQ";
+
+async function fetchDescription() {
+    try {
+        const res = await fetch(
+            `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${VIDEO_ID}&key=${API_KEY}`
+        );
+        const data = await res.json();
+
+        const desc = data.items[0].snippet.description;
+
+        document.getElementById("yt-description").innerText = desc;
+    } catch (error) {
+        document.getElementById("yt-description").innerText = "Nie udało się pobrać opisu.";
+        console.error(error);
+    }
+}
+
+fetchDescription();
+</script>
+    
 <header>
     <nav>
         <a href="index.html">RADIO NA ŻYWO</a>
@@ -24,7 +47,7 @@
         </div>
     </section>
     <section class="box">
-        tu jakiś opis kiedyś
+        <p id="yt-description">Ładowanie opisu...</p>
     </section>
 </main>
 
