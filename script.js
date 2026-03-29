@@ -19,5 +19,25 @@ async function updateMetadata() {
     }
 }
 
+function changeQuality() {
+    const audio = document.getElementById('main-audio');
+    const qualitySelect = document.getElementById('quality');
+    const selectedSource = qualitySelect.value;
+    
+    // czy muzyka grała wcześniej
+    const isPlaying = !audio.paused;
+
+    // Podmieniamy źródło
+    audio.src = selectedSource;
+    audio.load(); // nowy strumień
+
+    // Jeśli grała, odpalamy ją automatycznie po zmianie
+    if (isPlaying) {
+        audio.play();
+    }
+    
+    console.log("Zmieniono jakość na: " + selectedSource);
+}
+
 setInterval(updateMetadata, 30000); // Odświeżanie
 updateMetadata();
