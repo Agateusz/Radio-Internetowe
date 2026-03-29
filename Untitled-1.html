@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moje Radio Internetowe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 20px;
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .player {
+      margin-top: 50px;
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    button {
+      background: #ff4b2b;
+      border: none;
+      padding: 15px 30px;
+      margin: 10px;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ff416c;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<header>🎧 Moje Radio Internetowe</header>
+
+<div class="player">
+  <p>Teraz słuchasz:</p>
+  <audio id="radio" src="https://stream.live.vc.bbcmedia.co.uk/bbc_radio_one" preload="none"></audio>
+  <br>
+  <button onclick="playRadio()">▶️ Play</button>
+  <button onclick="pauseRadio()">⏸ Pause</button>
+</div>
+
+<footer>© 2026 Moje Radio</footer>
+
+<script>
+  const radio = document.getElementById('radio');
+
+  function playRadio() {
+    radio.play();
+  }
+
+  function pauseRadio() {
+    radio.pause();
+  }
+</script>
+
+</body>
+</html>
