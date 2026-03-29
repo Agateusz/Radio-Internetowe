@@ -4,6 +4,22 @@
     box-sizing: border-box;
 }
 
+.logo-container {
+  display: flex;         /* Ustawia elementy obok siebie */
+  align-items: center;   /* Wyśrodkowuje logo i tekst w pionie */
+  gap: 15px;             /* Robi odstęp między logo a tekstem */
+}
+
+.logo-img {
+  width: 50px;           /* Tutaj ustawiasz szerokość - zmień na taką, jaka Ci pasuje */
+  height: auto;          /* Zachowuje proporcje logo */
+}
+
+.logo-text {
+  font-size: 24px;       /* Rozmiar napisu */
+  margin: 0;             /* Usuwa domyślne marginesy nagłówka */
+}
+
 body {
     font-family: Arial, sans-serif;
 }
