@@ -44,14 +44,24 @@ function changeMainVideo(index) {
     const titleEl = document.getElementById("yt-video-title");
     const descEl = document.getElementById("yt-description");
 
-    // Ustawiamy wideo (z dodanym origin dla bezpieczeństwa)
+    // Ustawiamy źródło wideo
     if (iframeEl) {
         iframeEl.src = `https://www.youtube.com/embed/${video.id}?autoplay=1&enablejsapi=1&origin=${window.location.protocol}//${window.location.host}`;
     }
-    if (titleEl) titleEl.innerText = video.title;
-    if (descEl) descEl.innerText = video.description;
     
-    // Kluczowy moment: odświeżamy sidebar, żeby pokazać wszystkie filmy POZA tym wybranym
+    // Ustawiamy tytuł
+    if (titleEl) titleEl.innerText = video.title;
+    
+    // Ustawiamy opis - jeśli jest pusty, ładny komunikat
+    if (descEl) {
+        const descriptionText = video.description && video.description.trim() !== "" 
+            ? video.description 
+            : "Autor nie dodał jeszcze opisu do tego odcinka. 🎙️";
+        
+        descEl.innerText = descriptionText;
+    }
+    
+    // Odświeżamy listę boczną
     renderSidebar(video.id);
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
