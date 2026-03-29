@@ -1,0 +1,129 @@
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Nagłówek */
+header {
+    background-color: #333;
+    padding: 15px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Główna część */
+main {
+    padding: 20px;
+    min-height: 60vh;
+}
+
+/* Układ dla strony 1 */
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.grid-3 .full {
+    grid-column: span 2;
+}
+
+/* Układ dla strony 2 */
+.grid-2 {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Kafelki ogólne (został tylko chyba w podcast xD) */
+.box {
+    background-color: #ddd;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid #aaa;
+}
+
+/* Kafelek lewy */
+.left-top {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Obraz album */
+.left-top img {
+    width: 120px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.audio-player {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.audio-timer {
+    font-size: 14px;
+}
+
+/* Dolny blok */
+.bottom-tile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Obraz wykonawca */
+.bottom-tile img {
+    width: 200px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+}
+
+.bottom-text {
+    flex: 1;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 56.25%;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Stopka */
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
