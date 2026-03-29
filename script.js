@@ -13,6 +13,18 @@ async function updateMetadata() {
         document.getElementById('song-title').innerText = current.title;
         
         console.log("Gra: " + current.artist + " - " + current.title);
+
+        // --- AKTUALIZACJA OKŁADKI ---
+        const albumArt = document.getElementById('album-art');
+        if (current.image) {
+            albumArt.src = current.image;
+        } else {
+            // Jeśli piosenka nie ma okładki, wróć do domyślnego logo
+            albumArt.src = "alfa.jpg";
+        }
+        
+        console.log("Gra: " + current.artist + " - " + current.title);
+        
     } catch (error) {
         console.error("Błąd:", error);
         document.getElementById('song-title').innerText = "Radio Alfa Live";
