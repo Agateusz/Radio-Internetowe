@@ -246,3 +246,138 @@ footer {
 .quality-selector select:hover {
     border-color: #00d4ff;
 }
+
+/* --- UKŁAD STRONY PODCASTU --- */
+
+.podcast-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Lewa strona szersza (Wideo/Opis), prawa węższa */
+    gap: 30px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Lewa kolumna - trzyma wideo nad opisem */
+.podcast-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Kontenery (boxy) dla podcastu */
+.podcast-video-box, 
+.podcast-description-box, 
+.sidebar-box {
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* Responsywne wideo */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* Proporcje 16:9 */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* Styl opisu */
+#yt-description {
+    font-size: 0.95rem;
+    color: #bbb;
+    white-space: pre-wrap; /* Zachowuje entery z YouTube */
+    line-height: 1.7;
+}
+
+.podcast-description-box h3, 
+.sidebar-box h3 {
+    color: #00d4ff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+
+/* Prawa kolumna - Inne filmy */
+.podcast-sidebar {
+    min-height: 400px;
+}
+
+.video-item-placeholder {
+    padding: 20px;
+    border: 1px dashed #444;
+    border-radius: 8px;
+    text-align: center;
+    color: #666;
+}
+
+/* Responsywność dla telefonów - wszystko w jednej kolumnie */
+@media (max-width: 992px) {
+    .podcast-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .podcast-sidebar {
+        order: 3; /* Sidebar ląduje na samym dole na komórkach */
+    }
+}
+
+/* Kontener listy */
+.related-videos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Pojedynczy wiersz filmu */
+.video-item-small {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.video-item-small:hover {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+/* Miniaturka w sidebarze */
+.video-item-small img {
+    width: 100px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Tytuł w sidebarze */
+.video-item-small span {
+    font-size: 13px;
+    color: #e0e0e0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Max 2 linijki tytułu */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.loading-text {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}

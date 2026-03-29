@@ -9,30 +9,72 @@
 
 <script>
 const API_KEY = "AIzaSyCkovat4ywql3dwHVnixtmZhSQG47RH0k0";
-const VIDEO_ID = "dQw4w9WgXcQ";
+const MY_PLAYLIST_ID = "PLNu_RvGVX8vXIMzZjkyIvceRDLPl0k5YB"; 
+let videoDataCache = []; 
 
-async function fetchDescription() {
+function changeMainVideo(index) {
+    const video = videoDataCache[index];
+    if (!video) return;
+
+    const iframeEl = document.querySelector(".video-wrapper iframe");
+    const titleEl = document.getElementById("yt-video-title");
+    const descEl = document.getElementById("yt-description");
+
+    if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
+    if (titleEl) titleEl.innerText = video.title;
+    if (descEl) descEl.innerText = video.description;
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function fetchPodcastData() {
     try {
-        const res = await fetch(
-            `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${VIDEO_ID}&key=${API_KEY}`
-        );
-        const data = await res.json();
+        const listRes = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${MY_PLAYLIST_ID}&maxResults=10&key=${API_KEY}`);
+        const listData = await listRes.json();
 
-        const desc = data.items[0].snippet.description;
+        if (!listData.items || listData.items.length === 0) return;
 
-        document.getElementById("yt-description").innerText = desc;
+        // Zapisujemy dane do cache, żeby nie przesyłać ich w stringach HTML
+        videoDataCache = listData.items.map(item => ({
+            id: item.snippet.resourceId.videoId,
+            title: item.snippet.title,
+            description: item.snippet.description,
+            thumb: item.snippet.thumbnails.medium.url
+        }));
+
+        // Ładujemy pierwszy film na start
+        changeMainVideo(0);
+
+        // Generujemy listę boczną (od indeksu 1, bo 0 jest główny)
+        const container = document.getElementById("other-videos-container");
+        if (container) {
+            container.innerHTML = ""; 
+            videoDataCache.forEach((video, index) => {
+                if (index === 0) return;
+
+                const videoDiv = document.createElement('div');
+                videoDiv.className = 'video-item-small';
+                videoDiv.style.cursor = 'pointer';
+                videoDiv.onclick = () => changeMainVideo(index);
+                
+                videoDiv.innerHTML = `
+                    <img src="${video.thumb}" alt="miniaturka">
+                    <span>${video.title}</span>
+                `;
+                container.appendChild(videoDiv);
+            });
+        }
     } catch (error) {
-        document.getElementById("yt-description").innerText = "Nie udało się pobrać opisu.";
-        console.error(error);
+        console.error("Błąd ładowania:", error);
     }
 }
 
-fetchDescription();
+fetchPodcastData();
 </script>
     
 <header>
     <nav class="logo-container">
-     <a href="index.html" class="active">
+     <a href="Untitled-1.html" class="active">
         <div class="logo-text">
                 <img src="logo.jpg" alt="RadioAlfa4You Logo" class="logo-img">
             <span>RadioAlfa4You</span>
@@ -40,24 +82,35 @@ fetchDescription();
      </a>
         
         <div class="nav-links">
-            <a href="index.html" class="active">RADIO NA ŻYWO</a>
+            <a href="Untitled-1.html" class="active">RADIO NA ŻYWO</a>
             <a href="podcast.html">DZISIEJSZA POGADANKA</a>
         </div>
     </nav>
 </header>
 
-<main class="grid-2">
-    <section class="box">
-        <div class="video-container">
-            <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                frameborder="0">
-            </iframe>
+<main class="podcast-layout">
+    <div class="podcast-main-content">
+        <section class="podcast-video-box">
+            <div class="video-wrapper">
+                <iframe src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <h2 id="yt-video-title" class="podcast-episode-title">Ładowanie tytułu...</h2>
+        </section>
+
+        <section class="podcast-description-box">
+            <h3>Opis odcinka</h3>
+            <div id="yt-description">Ładowanie opisu...</div>
+        </section>
+    </div>
+
+    <aside class="podcast-sidebar">
+        <div class="sidebar-box">
+            <h3>Inne filmy</h3>
+            <div id="other-videos-container" class="related-videos-list">
+                <p class="loading-text">Pobieranie listy...</p>
+            </div>
         </div>
-    </section>
-    <section class="box">
-        <p id="yt-description">Ładowanie opisu...</p>
-    </section>
+    </aside>
 </main>
 
 
