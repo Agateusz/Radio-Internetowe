@@ -2,70 +2,93 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Radio Alfa 4 You</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Alfa 4 You | Twoje Centrum Muzyczne</title>
+    <link rel="stylesheet" href="style2.css">
 </head>
 <body>
 
 <header>
-    <nav>
-        <div class="logo-container">
-            <img src="logo.jpg" alt="RadioAlfa4You Logo" class="logo-img">
-            <h1 class="logo-text">
-                RadioAlfa4You |
-                <a href="index.html">RADIO NA ŻYWO |</a>
-                <a href="podcast.html">  DZISIEJSZA POGADANKA</a>
-            </h1>
+    <nav class="logo-container">
+        <div class="logo-text">
+            <img src="alfa.jpg" alt="RadioAlfa4You Logo" class="logo-img">
+            <span>RadioAlfa4You</span>
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" class="active">RADIO NA ŻYWO</a>
+            <a href="podcast.html">DZISIEJSZA POGADANKA</a>
         </div>
     </nav>
 </header>
 
-<main class="grid-3">
-
-    <!-- Kafelek lewy -->
-    <section class="box left-tile">
-
-        <div class="left-top">
-            <img src="letvultures.jpg" alt="obraz">
-            
-            <div class="text">
-                <p><strong>Tekst pogrubiony</strong></p>
-                <p><em>Tekst pochylony</em></p>
+<main>
+    <div class="grid-3">
+        <section class="box">
+            <div class="left-top">
+                <img src="letvultures.jpg" alt="Okładka albumu">
+                <div class="text">
+                    <div class="now-playing-badge">
+                        <span class="dot"></span> TERAZ GRANE
+                    </div>
+                    <h2 class="song-title">Szukajcie aż znajdziecie</h2>
+                    <p class="artist-name">Chada</p>
+                </div>
             </div>
-        </div>
 
-        <!-- Audio bez kontroli użytkownika -->
-        <div class="audio-player">
-			<audio controls>
-			<source src="HVY MTL DRMR.mp3" type="audio/mpeg">
-			</audio>
-		</div>
+            <div class="audio-player">
+                <audio controls>
+                    <source src="HVY MTL DRMR.mp3" type="audio/mpeg">
+                    Twoja przeglądarka nie obsługuje odtwarzacza audio.
+                </audio>
+            </div>
+        </section>
 
-    </section>
+        <section class="box">
+            <div class="text">
+                <h2>O nas</h2>
+                <p>Radio Alfa 4 You to Twoja codzienna dawka najlepszej muzyki. Dołącz do naszej społeczności!</p>
+                <hr class="separator">
+                <p>Przegapiłeś naszą ostatnią audycję? Nic straconego! Sprawdź nasze archiwum i posłuchaj najnowszych nagrań.</p>
+                <a href="podcast.html" class="cta-button">Odwiedź nasze podcasty</a>
+            </div>
+        </section>
 
-    <!-- Kafelek prawy -->
-    <section class="box">
-        Kafelek prawy (do edycji)
-    </section>
+       <section class="box contact-box">
+            <div class="text">
+                <h2>Kontakt</h2>
+                <p>Masz pytania? Chcesz zamówić piosenkę?</p>
+                <ul class="contact-list">
+                    <li>📧 Email: <a href="mailto:studio@radioalfa.pl">studio@radioalfa.pl</a></li>
+                    <li>📞 Tel: +48 123 456 789</li>
+                </ul>
 
-    <!-- Dolny blok -->
-    <section class="box full bottom-tile">
+                <div class="social-links-vertical">
+                    <a href="https://www.instagram.com/radioalfa4you" target="_blank" class="social-item">
+                        <img src="instagram.png" alt="Instagram" class="social-img">
+                        <span>Instagram</span>
+                    </a>
 
-        <img src="desrocs.jpg" alt="obraz">
+                    <a href="https://www.youtube.com/user/radioalfa4you" target="_blank" class="social-item">
+                        <img src="iyoutube.png" alt="YouTube" class="social-img">
+                        <span>YouTube</span>
+                    </a>
 
-        <div class="bottom-text">
-            Tekst obok obrazka (do edycji)
-        </div>
-
-    </section>
-
+                    <a href="https://www.facebook.com/radioalfa4you" target="_blank" class="social-item">
+                        <img src="politechnikalubelska.png" alt="Facebook" class="social-img logo-pl">
+                        <span>Facebook</span>
+                        </a>
+                </div>
+            </div>
+        </section>
+    </div>
 </main>
 
-
 <footer>
-    <div></div>
-    <div></div>
-    <div></div>
+    <div class="footer-content">
+        <p>&copy; 2026 Radio Alfa 4 You. Wszystkie prawa zastrzeżone.</p>
+        <p class="credits">Wykonanie: <strong>Agusia</strong> & <strong>Trocki</strong></p>
+    </div>
 </footer>
 
 </body>
