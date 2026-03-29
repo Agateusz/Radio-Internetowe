@@ -42,6 +42,15 @@
                     <source src="https://ice1.somafm.com/groovesalad-128-mp3" type="audio/mpeg">
                     Twoja przeglądarka nie obsługuje odtwarzacza audio.
                 </audio>
+
+                <div class="quality-selector">
+                    <label for="quality">Jakość:</label>
+                    <select id="quality" onchange="changeQuality()">
+                        <option value="https://ice1.somafm.com/groovesalad-128-mp3">Wysoka (128 kbps)</option>
+                        <option value="https://ice1.somafm.com/groovesalad-64-aac">Średnia (64 kbps AAC)</option>
+                        <option value="https://ice1.somafm.com/groovesalad-32-aac">Niska (32 kbps - Oszczędna)</option>
+                    </select>
+                </div>
             </div>
         </section>
 
@@ -88,7 +97,7 @@
 <footer>
     <div class="footer-content">
         <p>&copy; 2026 Radio Alfa 4 You. Wszystkie prawa zastrzeżone.</p>
-        <p class="credits">Wykonanie: <strong>Sych Agnieszka</strong> & <strong>Szlęzal Kajetan</strong></p>
+        <p class="credits">Wykonanie: <strong>Sych Agnieszka</strong> & <strong>Szlęzak Kajetan</strong></p>
     </div>
 </footer>
 
