@@ -1,4 +1,4 @@
-/* Import czcionki z Google Fonts */
+/* Import czcionki z Google Fonts dla nowoczesnego wyglądu */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
 * {
@@ -12,9 +12,6 @@ body {
     background-color: #121212; 
     color: #e0e0e0;
     line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 /* --- NAGŁÓWEK I NAWIGACJA --- */
@@ -50,55 +47,47 @@ header {
     gap: 15px;
 }
 
-.nav-links a {
+/* Linki w menu */
+.logo-text a {
     color: #bbb;
     text-decoration: none;
     font-size: 14px;
-    margin-left: 20px;
     font-weight: 400;
     transition: 0.3s;
     text-transform: uppercase;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.logo-text a:hover {
     color: #00d4ff;
     text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
 }
 
-/* --- NOWY UKŁAD GŁÓWNY (GRID) --- */
-.main-layout {
-    display: grid;
-    /* Podział: 70% dla lewej strony, 30% dla opisu */
-    grid-template-columns: 7fr 3fr; 
-    gap: 30px;
-    max-width: 1400px; /* Nieco szerzej, by pomieścić dwa kontenery obok siebie */
-    margin: 30px auto;
+/* --- GŁÓWNA TREŚĆ (GRID) --- */
+main {
+    max-width: 1200px;
+    margin: 40px auto;
     padding: 0 20px;
-    flex: 1;
 }
 
-/* Lewa kolumna: Pionowy układ wideo i playlisty */
-.left-column {
-    display: flex;
-    flex-direction: column;
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 30px;
 }
 
-/* Prawa kolumna: Opis na całą wysokość */
-.description-column {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* Przewijanie jeśli tekst jest za długi */
-    position: sticky;
-    top: 90px; /* Przyklejenie obok wideo podczas skrolowania */
-    max-height: calc(100vh - 150px);
+#album-cover {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: src 0.5s ease; 
 }
 
 /* --- KAFELKI (BOXES) --- */
 .box {
     background: #1e1e1e;
-    padding: 25px;
+    padding: 30px;
     border-radius: 16px; 
     border: 1px solid #333;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
@@ -106,17 +95,127 @@ header {
 }
 
 .box:hover {
+    transform: translateY(-5px);
     border-color: #00d4ff;
 }
 
-/* --- WIDEO I PLAYLISTA --- */
+/* Sekcja z obrazkiem i tekstem w kafelku */
+.left-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.left-top img {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* --- ODTWARZACZ AUDIO --- */
+.audio-player {
+    background: #252525;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+audio {
+    width: 100%;
+    height: 40px;
+    filter: invert(90%) hue-rotate(180deg) brightness(1.2); 
+}
+
+/* Responsywność - na telefonach kafelki jeden pod drugim */
+@media (max-width: 768px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+    .logo-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.contact-box {
+    grid-column: span 2;
+    text-align: center;
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.contact-list a {
+    color: #00d4ff;
+    text-decoration: none;
+}
+
+/* Stylizacja ikon społecznościowych */
+
+/* Kontener główny */
+.social-links-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px; 
+    margin-top: 15px;
+}
+
+.social-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 180px; 
+    gap: 12px;
+    text-decoration: none;
+    color: #bbb; 
+    transition: 0.2s ease;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+.social-item:hover {
+    color: #00d4ff;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Ikony */
+.social-img {
+    height: 22px; 
+    width: 22px;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: 0.2s;
+}
+
+.social-item:hover .social-img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.logo-pl {
+    width: 22px;
+}
+
+.social-item span {
+    font-size: 13px; 
+    font-weight: 400;
+}
+
 .video-container {
     position: relative;
     width: 100%;
+    height: 100%;
     padding-bottom: 56.25%; /* proporcje 16:9 */
     overflow: hidden;
     border-radius: 12px;
-    background: #000;
 }
 
 .video-container iframe {
@@ -127,40 +226,49 @@ header {
     height: 100%;
     border: none;
 }
-
-/* Stylizacja tekstu w opisie */
-#yt-description {
-    font-size: 14px;
-    color: #bbb;
-    white-space: pre-wrap; /* Zachowuje entery z opisu YT */
-}
-
-h3 {
-    color: #00d4ff;
-    margin-bottom: 15px;
-}
-
-/* --- STOPKA --- */
+/* --- STOPKA (FOOTER) --- */
 footer {
     background: #1a1a1a;
     color: #888;
-    padding: 25px 0;
+    padding: 30px 0;
+    margin-top: 50px; 
     border-top: 1px solid #333;
     text-align: center;
 }
 
-.credits strong {
-    color: #00d4ff;
+.footer-content p {
+    margin: 5px 0;
+    font-size: 14px;
 }
 
-/* Responsywność */
-@media (max-width: 992px) {
-    .main-layout {
-        grid-template-columns: 1fr; /* Na tabletach i telefonach jeden pod drugim */
-    }
-    
-    .description-column {
-        position: static;
-        max-height: none;
-    }
+.credits {
+    color: #bbb;
+    letter-spacing: 1px;
+}
+
+.credits strong {
+    color: #00d4ff; 
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+}
+
+/* wybieranie jakości */
+.quality-selector {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
+}
+
+.quality-selector select {
+    background: #1a1a1a;
+    color: #00d4ff;
+    border: 1px solid #333;
+    padding: 3px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+.quality-selector select:hover {
+    border-color: #00d4ff;
 }
