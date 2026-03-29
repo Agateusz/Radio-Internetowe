@@ -10,7 +10,31 @@
 <script>
 const API_KEY = "AIzaSyCkovat4ywql3dwHVnixtmZhSQG47RH0k0";
 const MY_PLAYLIST_ID = "PLNu_RvGVX8vXIMzZjkyIvceRDLPl0k5YB"; 
-let videoDataCache = []; 
+let videoDataCache = []; // Tu przechowamy dane filmów
+
+// Funkcja odświeżająca listę boczną
+function renderSidebar(currentPlayingId) {
+    const container = document.getElementById("other-videos-container");
+    if (!container) return;
+
+    container.innerHTML = ""; // Czyścimy listę
+
+    videoDataCache.forEach((video, index) => {
+        // Pomijamy tylko ten film, który aktualnie gra w dużym oknie
+        if (video.id === currentPlayingId) return;
+
+        const videoDiv = document.createElement('div');
+        videoDiv.className = 'video-item-small';
+        videoDiv.style.cursor = 'pointer';
+        videoDiv.onclick = () => changeMainVideo(index);
+        
+        videoDiv.innerHTML = `
+            <img src="${video.thumb}" alt="miniaturka">
+            <span>${video.title}</span>
+        `;
+        container.appendChild(videoDiv);
+    });
+}
 
 function changeMainVideo(index) {
     const video = videoDataCache[index];
@@ -20,9 +44,15 @@ function changeMainVideo(index) {
     const titleEl = document.getElementById("yt-video-title");
     const descEl = document.getElementById("yt-description");
 
-    if (iframeEl) iframeEl.src = `https://www.youtube.com/embed/${video.id}?autoplay=1`;
+    // Ustawiamy wideo (z dodanym origin dla bezpieczeństwa)
+    if (iframeEl) {
+        iframeEl.src = `https://www.youtube.com/embed/${video.id}?autoplay=1&enablejsapi=1&origin=${window.location.protocol}//${window.location.host}`;
+    }
     if (titleEl) titleEl.innerText = video.title;
     if (descEl) descEl.innerText = video.description;
+    
+    // Kluczowy moment: odświeżamy sidebar, żeby pokazać wszystkie filmy POZA tym wybranym
+    renderSidebar(video.id);
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -34,36 +64,16 @@ async function fetchPodcastData() {
 
         if (!listData.items || listData.items.length === 0) return;
 
-        // Zapisujemy dane do cache, żeby nie przesyłać ich w stringach HTML
         videoDataCache = listData.items.map(item => ({
             id: item.snippet.resourceId.videoId,
             title: item.snippet.title,
             description: item.snippet.description,
-            thumb: item.snippet.thumbnails.medium.url
+            thumb: item.snippet.thumbnails.high ? item.snippet.thumbnails.high.url : item.snippet.thumbnails.default.url
         }));
 
-        // Ładujemy pierwszy film na start
+        // Start strony
         changeMainVideo(0);
 
-        // Generujemy listę boczną (od indeksu 1, bo 0 jest główny)
-        const container = document.getElementById("other-videos-container");
-        if (container) {
-            container.innerHTML = ""; 
-            videoDataCache.forEach((video, index) => {
-                if (index === 0) return;
-
-                const videoDiv = document.createElement('div');
-                videoDiv.className = 'video-item-small';
-                videoDiv.style.cursor = 'pointer';
-                videoDiv.onclick = () => changeMainVideo(index);
-                
-                videoDiv.innerHTML = `
-                    <img src="${video.thumb}" alt="miniaturka">
-                    <span>${video.title}</span>
-                `;
-                container.appendChild(videoDiv);
-            });
-        }
     } catch (error) {
         console.error("Błąd ładowania:", error);
     }
