@@ -1,51 +1,51 @@
-// Używamy stacji SomaFM (kanał Groove Salad) - stabilne API z okładkami
-const statsUrl = "https://somafm.com/songs/groovesalad.json";
-
-// Domyślna okładka (np. logo Twojego radia), gdyby API nie zwróciło obrazka
-const defaultCover = "letvultures.jpg"; 
+// Adres do Twoich statystyk
+const statsUrl = "https://open.fm/itunestf/1"; 
 
 async function updateMetadata() {
     try {
-        // AllOrigins pomaga ominąć CORS przy testach lokalnych i na niektórych hostingach
-        const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(statsUrl)}`);
-        
-        if (!response.ok) throw new Error('Problem z siecią');
-        
-        const json = await response.json();
-        const data = JSON.parse(json.contents);
-        
-        // Wyciągamy ostatnią piosenkę z listy
-        const current = data.songs[0];
-        
-        // 1. Aktualizujemy tekst (Artysta i Tytuł)
-        document.getElementById('artist-name').innerText = current.artist;
-        document.getElementById('song-title').innerText = current.title;
-        
-        // 2. Aktualizujemy okładkę albumu
-        const coverElement = document.getElementById('album-cover');
-        
-        // SomaFM często podaje okładkę w polu 'image'. Jeśli go nie ma, używamy domyślnej.
-        if (current.image && current.image !== "") {
-            // Czasami linki są względne, więc musimy dodać domenę SomaFM
-            const fullImageUrl = current.image.startsWith('http') ? current.image : `https://somafm.com${current.image}`;
-            coverElement.src = fullImageUrl;
-        } else {
-            coverElement.src = defaultCover;
-        }
-        
-        console.log("Zaktualizowano: " + current.artist + " - " + current.title);
-        
+        const response = await fetch(statsUrl);
+        const data = await response.json();
+        const current = data.tracks[0];
+
+        const artist = current.artist;
+        const title = current.title;
+
+        // Autor i muzyka
+        document.getElementById('artist-name').innerText = artist;
+        document.getElementById('song-title').innerText = title;
+
+        //SZUKANIE OKŁADKI: Wysyłamy zapytanie do iTunes o ten konkretny utwór
+        fetchCoverFromiTunes(artist, title);
+
     } catch (error) {
-        console.error("Błąd pobierania danych:", error);
-        // W razie błędu ustawiamy domyślne wartości
-        document.getElementById('song-title').innerText = "Radio Alfa Live";
-        document.getElementById('artist-name').innerText = "Najlepsza muzyka";
-        document.getElementById('album-cover').src = defaultCover;
+        console.error("Błąd pobierania danych stacji:", error);
     }
 }
 
-// Odświeżaj dane co 20 sekund (SomaFM nie zmienia piosenek tak często)
-setInterval(updateMetadata, 20000);
+async function fetchCoverFromiTunes(artist, title) {
+    const searchTerm = encodeURIComponent(`${artist} ${title}`);
+    const iTunesUrl = `https://itunes.apple.com/search?term=${searchTerm}&media=music&limit=1`;
 
-// Pierwsze wywołanie przy starcie strony
+    try {
+        // iTunes pozwala na pobieranie danych bez blokad CORS!
+        const response = await fetch(iTunesUrl);
+        const data = await response.json();
+
+        const coverImg = document.getElementById('album-cover');
+
+        if (data.results && data.results.length > 0) {
+            // Pobieramy obrazek w lepszej rozdzielczości (zamieniamy 100x100 na 600x600)
+            let highResCover = data.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+            coverImg.src = highResCover;
+        } else {
+            // Jeśli iTunes nie znajdzie piosenki, ustawiamy Twoje logo
+            coverImg.src = "logo.jpg";
+        }
+    } catch (error) {
+        console.error("Błąd szukania okładki w iTunes:", error);
+    }
+}
+
+// Odświeżanie co 20 sekund
+setInterval(updateMetadata, 20000);
 updateMetadata();
