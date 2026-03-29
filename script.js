@@ -1,4 +1,4 @@
-const statsUrl = "https://open.fm/itunestf/1"; 
+const statsUrl = "https://somafm.com/songs/groovesalad.json"; 
 
 async function updateMetadata() {
     try {
