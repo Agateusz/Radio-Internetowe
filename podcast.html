@@ -7,6 +7,55 @@
 </head>
 <body>
 
+<header>
+    <nav class="logo-container">
+        <a href="index.html" class="active">
+            <div class="logo-text">
+                <img src="logo.jpg" alt="RadioAlfa4You Logo" class="logo-img">
+                <span>RadioAlfa4You</span>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="active">RADIO NA ŻYWO</a>
+            <a href="podcast.html">DZISIEJSZA POGADANKA</a>
+        </div>
+    </nav>
+</header>
+
+<main class="main-layout">
+    <div class="left-column">
+        <section class="box video-box">
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    frameborder="0" allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <section class="box playlist-box">
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/videoseries?list=PLirAqAj4qnP2S0HEnH0v5DS3X69yZ3M0m" 
+                    frameborder="0" allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+    </div>
+
+    <aside class="box description-column">
+        <h3>Odcinek - Opis</h3>
+        <p id="yt-description">Ładowanie opisu...</p>
+    </aside>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2026 Radio Alfa 4 You. Wszystkie prawa zastrzeżone.</p>
+        <p class="credits">Wykonanie: <strong>Sych Agnieszka</strong> & <strong>Szlęzak Kajetan</strong></p>
+    </div>
+</footer>
+
 <script>
 const API_KEY = "AIzaSyCkovat4ywql3dwHVnixtmZhSQG47RH0k0";
 const VIDEO_ID = "dQw4w9WgXcQ";
@@ -17,9 +66,7 @@ async function fetchDescription() {
             `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${VIDEO_ID}&key=${API_KEY}`
         );
         const data = await res.json();
-
         const desc = data.items[0].snippet.description;
-
         document.getElementById("yt-description").innerText = desc;
     } catch (error) {
         document.getElementById("yt-description").innerText = "Nie udało się pobrać opisu.";
@@ -29,45 +76,6 @@ async function fetchDescription() {
 
 fetchDescription();
 </script>
-    
-<header>
-    <nav class="logo-container">
-     <a href="index.html" class="active">
-        <div class="logo-text">
-                <img src="logo.jpg" alt="RadioAlfa4You Logo" class="logo-img">
-            <span>RadioAlfa4You</span>
-        </div>
-     </a>
-        
-        <div class="nav-links">
-            <a href="index.html" class="active">RADIO NA ŻYWO</a>
-            <a href="podcast.html">DZISIEJSZA POGADANKA</a>
-        </div>
-    </nav>
-</header>
-
-<main class="grid-2">
-    <section class="box">
-        <div class="video-container">
-            <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                frameborder="0">
-            </iframe>
-        </div>
-    </section>
-    <section class="box">
-        <p id="yt-description">Ładowanie opisu...</p>
-    </section>
-</main>
-
-
-
-<footer>
-    <div class="footer-content">
-        <p>&copy; 2026 Radio Alfa 4 You. Wszystkie prawa zastrzeżone.</p>
-        <p class="credits">Wykonanie: <strong>Sych Agnieszka</strong> & <strong>Szlęzak Kajetan</strong></p>
-    </div>
-</footer>
 
 </body>
 </html>
