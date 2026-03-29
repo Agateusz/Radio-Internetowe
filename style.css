@@ -75,6 +75,15 @@ main {
     gap: 30px;
 }
 
+#album-cover {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; 
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: src 0.5s ease; 
+}
+
 /* --- KAFELKI (BOXES) --- */
 .box {
     background: #1e1e1e;
